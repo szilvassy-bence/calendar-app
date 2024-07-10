@@ -2,6 +2,8 @@
 
 namespace Database\Seeders;
 
+use App\Enums\BookingRepetition;
+use App\Enums\Day;
 use App\Models\Booking;
 use App\Models\BookingGroup;
 use App\Models\User;
@@ -26,44 +28,45 @@ class DatabaseSeeder extends Seeder
         ]);
 
         Booking::factory()->create([
-            'start_date' => Carbon::create(2024,9,8),
-            'start_time' => Carbon::create(2024,9,8,8,0,0),
-            'end_time' => Carbon::create(2024,9,8,10,0,0),
-            'day' => 'sunday'
+            'start_date' => carbon::create(2024,9,8),
+            'start_time' => carbon::create(2025,9,8,8,0,0)->toTimeString(),
+            'end_time' => carbon::create(2025,9,8,10,0,0)->toTimeString(),
+            'day' => Day::SUNDAY->value,
+            'repetition' => BookingRepetition::NO->value
         ]);
 
-        $this->generateBookings(
-            start_date: carbon::create(2024,1,1),
-            repetition: 'even_weeks',
-            startHour: 10,
-            endHour: 12,
-            day: 'monday'
-        );
+        Booking::factory()->create([
+            'start_date' => carbon::create(2024,1,1),
+            'start_time' => carbon::create(2024,1,8,10)->toTimeString(),
+            'end_time' => carbon::create(2025,1,8,12)->toTimeString(),
+            'day' => Day::MONDAY->value,
+            'repetition' => BookingRepetition::EVEN_WEEKS->value
+        ]);
 
-        $this->generateBookings(
-            start_date: carbon::create(2024,1,1),
-            repetition: 'odd_weeks',
-            startHour: 12,
-            endHour: 16,
-            day: 'wednesday'
-        );
+        Booking::factory()->create([
+            'start_date' => carbon::create(2024,1,1),
+            'start_time' => carbon::create(2024,1,3,12)->toTimeString(),
+            'end_time' => carbon::create(2025,1,3,16)->toTimeString(),
+            'day' => Day::WEDNESDAY->value,
+            'repetition' => BookingRepetition::EVEN_WEEKS->value
+        ]);
 
-        $this->generateBookings(
-            start_date: carbon::create(2024,1,1),
-            repetition: 'every_weeks',
-            startHour: 10,
-            endHour: 16,
-            day: 'friday'
-        );
+        Booking::factory()->create([
+            'start_date' => carbon::create(2024,1,1),
+            'start_time' => carbon::create(2024,1,5,12)->toTimeString(),
+            'end_time' => carbon::create(2025,1,5,16)->toTimeString(),
+            'day' => Day::FRIDAY->value,
+            'repetition' => BookingRepetition::WEEKS->value
+        ]);
 
-        $this->generateBookings(
-            start_date: carbon::create(2024,6,1),
-            repetition: 'every_weeks',
-            startHour: 16,
-            endHour: 20,
-            day: 'thursday',
-            end_date: carbon::create(2024,11,30)
-        );
+        Booking::factory()->create([
+            'start_date' => carbon::create(2024,6,1),
+            'end_date' => carbon::create(2024,11,30),
+            'start_time' => carbon::create(2024,1,5,16)->toTimeString(),
+            'end_time' => carbon::create(2025,1,5,20)->toTimeString(),
+            'day' => Day::THURSDAY->value,
+            'repetition' => BookingRepetition::WEEKS->value
+        ]);
     }
 
     private function nextDateTime(DateTime $start_date, string $repetition, string $day): DateTime
