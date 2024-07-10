@@ -17,15 +17,7 @@ class BookingFactory extends Factory
      */
     public function definition(): array
     {
-        $date = Carbon::create(2024,9,8,8,0,0);
-        $day = $date->day;
-
         return [
-            'start_date' => $date->toDate(),
-            'start_time' => $date,
-            'end_time' => $date->addHours(2),
-            'repetition' => 'no',
-            'day' => $day,
             'user' => fake()->name,
         ];
     }
