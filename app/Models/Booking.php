@@ -2,9 +2,13 @@
 
 namespace App\Models;
 
+use App\Casts\EnumCast;
+use App\Enums\BookingRepetition;
+use App\Enums\Day;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Carbon\Carbon;
 
 class Booking extends Model
 {
@@ -19,20 +23,37 @@ class Booking extends Model
         'day',
         'repetition',
         'user',
-        'booking_group_id'
     ];
 
     protected $casts = [
-        'start_date' => 'date',
-        'end_date' => 'date',
-        'start_time' => 'datetime',
-        'end_time' => 'datetime',
+        'start_date' => 'datetime:Y-m-d',
+        'end_date' => 'datetime:Y-m-d',
+        'start_time' => 'datetime:H:i',
+        'end_time' => 'datetime:H:i',
+        'repetition' => EnumCast::class . ':' . BookingRepetition::class,
+        'day' => EnumCast::class . ':' . Day::class,
     ];
 
-    public function bookingGroup(): BelongsTo
-    {
-        return $this-> belongsTo(BookingGroup::class);
-    }
 
 
+
+
+//    public function getEndDateAttribute($value)
+//    {
+//        return Carbon::parse($value)->format('Y-m-d');
+//    }
+//    public function getStartTimeAttribute($value)
+//    {
+//        return Carbon::parse($value)->format('H:i');
+//    }
+//
+//    public function getEndTimeAttribute($value)
+//    {
+//        return Carbon::parse($value)->format('H:i');
+//    }
+//
+//    public function getRepetitionAttribute($value)
+//    {
+//        return BookingRepetition::from($value);
+//    }
 }
