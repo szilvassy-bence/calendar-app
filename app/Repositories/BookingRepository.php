@@ -36,7 +36,7 @@ class BookingRepository
         if (!$this->bookingService->isInOpeningHours($booking)) {
             $opening_hour = Config::get('office.opening_hour');
             $closing_hour = Config::get('office.closing_hour');
-            throw new HttpException(400, 'The booking is not in opening hours: between ' . $opening_hour . ':00 and ' . $closing_hour . ':00!' );
+            throw new HttpException(400, 'The booking is not in opening hours: between ' . $opening_hour . ':00 and ' . $closing_hour . ':00, monday to friday!' );
         }
 
         // to check those existing bookings that are at the same day
