@@ -7,6 +7,7 @@ use App\Enums\Day;
 use App\Http\Requests\BookingRequest;
 use App\Models\Booking;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class BookingService
@@ -43,6 +44,10 @@ class BookingService
     }
 
     public function isInOpeningHours(Booking $booking) {
+        $openingHour = Config::get('office.opening_hour');
+        $closingHour = Config::get('office.closing_hour');
+        var_dump($openingHour);
+
         if ($booking->day === Day::SATURDAY || $booking->day === Day::SUNDAY) {
             return false;
         }
