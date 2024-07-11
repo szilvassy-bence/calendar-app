@@ -8,6 +8,7 @@ use App\Repositories\BookingRepository;
 use App\Services\BookingService;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class BookingController extends Controller
@@ -29,5 +30,12 @@ class BookingController extends Controller
         } catch (HttpException $e) {
             return response()->json(['message' => $e->getMessage()], $e->getStatusCode());
         }
+    }
+
+    public function getOpeningHours()
+    {
+        return response()->json([
+            'opening_hour' => Config::get('office.opening_hour'),
+            'closing_hour' => Config::get('office.closing_hour')]);
     }
 }

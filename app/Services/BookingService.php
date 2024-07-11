@@ -46,15 +46,14 @@ class BookingService
     public function isInOpeningHours(Booking $booking) {
         $openingHour = Config::get('office.opening_hour');
         $closingHour = Config::get('office.closing_hour');
-        var_dump($openingHour);
 
         if ($booking->day === Day::SATURDAY || $booking->day === Day::SUNDAY) {
             return false;
         }
-        if ($booking->start_time < Carbon::createFromTime(8)) {
+        if ($booking->start_time < Carbon::createFromTime($openingHour)) {
             return false;
         }
-        if ($booking->end_time > Carbon::createFromTime(20)) {
+        if ($booking->end_time > Carbon::createFromTime($closingHour)) {
             return false;
         }
         return true;

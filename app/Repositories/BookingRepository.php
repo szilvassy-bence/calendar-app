@@ -6,6 +6,7 @@ use App\Http\Requests\BookingRequest;
 use App\Models\Booking;
 use App\Services\BookingService;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Config;
 use Symfony\Component\HttpKernel\Exception\HttpException;
 
 class BookingRepository
@@ -33,7 +34,9 @@ class BookingRepository
         $booking->user = $request['user'];
 
         if (!$this->bookingService->isInOpeningHours($booking)) {
-            throw new HttpException(400, 'The booking is not in opening hours!');
+            $opening_hour = Config::get('office.opening_hour');
+            $closing_hour = Config::get('office.closing_hour');
+            throw new HttpException(400, 'The booking is not in opening hours: between ' . $opening_hour . ':00 and ' . $closing_hour . ':00!' );
         }
 
         // to check those existing bookings that are at the same day
