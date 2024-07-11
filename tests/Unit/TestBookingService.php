@@ -4,12 +4,11 @@ namespace Tests\Unit;
 
 use App\Enums\BookingRepetition;
 use App\Enums\Day;
-use App\Http\Requests\BookingRequest;
 use App\Models\Booking;
 use App\Services\BookingService;
 use Carbon\Carbon;
-use Mockery;
 use PHPUnit\Framework\TestCase;
+use Illuminate\Support\Facades\Config;
 
 final class TestBookingService extends TestCase
 {
@@ -93,7 +92,6 @@ final class TestBookingService extends TestCase
 
     public function test_weeks_rep_has_overlap_returns_true(): void
     {
-        // Mocking the Booking model
         $booking = new Booking();
         $booking->repetition = BookingRepetition::WEEKS;
         $booking->start_date = Carbon::create('2024-01-01');
@@ -109,7 +107,6 @@ final class TestBookingService extends TestCase
 
     public function test_weeks_rep_has_no_overlap_returns_false(): void
     {
-        // Mocking the Booking model
         $booking = new Booking();
         $booking->repetition = BookingRepetition::WEEKS;
         $booking->start_date = Carbon::create('2024-01-01');
@@ -125,7 +122,6 @@ final class TestBookingService extends TestCase
 
     public function test_even_weeks_rep_has_overlap_returns_true(): void
     {
-        // Mocking the Booking model
         $booking = new Booking();
         $booking->repetition = BookingRepetition::EVEN_WEEKS;
         $booking->start_date = Carbon::create('2024-01-01');
@@ -141,7 +137,6 @@ final class TestBookingService extends TestCase
 
     public function test_even_weeks_rep_has_no_overlap_returns_false(): void
     {
-        // Mocking the Booking model
         $booking = new Booking();
         $booking->repetition = BookingRepetition::EVEN_WEEKS;
         $booking->start_date = Carbon::create('2024-01-01');
@@ -157,7 +152,6 @@ final class TestBookingService extends TestCase
 
     public function test_odd_weeks_rep_has_overlap_returns_true(): void
     {
-        // Mocking the Booking model
         $booking = new Booking();
         $booking->repetition = BookingRepetition::ODD_WEEKS;
         $booking->start_date = Carbon::create('2024-01-01');
@@ -173,7 +167,6 @@ final class TestBookingService extends TestCase
 
     public function test_odd_weeks_rep_has_no_overlap_returns_false(): void
     {
-        // Mocking the Booking model
         $booking = new Booking();
         $booking->repetition = BookingRepetition::ODD_WEEKS;
         $booking->start_date = Carbon::create('2024-01-01');
@@ -189,7 +182,7 @@ final class TestBookingService extends TestCase
 
     public function test_odd_week_and_even_week_rep_has_overlap_returns_false(): void
     {
-        // Mocking the Booking model
+
         $booking = new Booking();
         $booking->repetition = BookingRepetition::EVEN_WEEKS;
         $booking->start_date = Carbon::create('2024-01-01');
