@@ -1,0 +1,3 @@
+[submodule "calendar-app"]
+	path = calendar-app
+	url = https://github.com/szilvassy-bence/calendar-app.git
